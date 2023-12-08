@@ -5,11 +5,21 @@ import '../appwrite/DataBaseController.dart';
 
 class HomeScreenController extends GetxController {
   DatabaseController databaseController = Get.put(DatabaseController());
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  RxList<dynamic> data = <dynamic>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    databaseController.getData();
+    setUserData();
+    print('home controller');
+  }
+
+  void setUserData() async {
+    final result = await databaseController.getData();
+    data.addAll(result);
+  }
+
+  void deleteData(String documentId) async {
+    await databaseController.deleteData(documentId);
   }
 }

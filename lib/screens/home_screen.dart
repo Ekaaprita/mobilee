@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:mobilekelomp/controllers/auth_controller.dart';
 import 'package:mobilekelomp/controllers/home_screen_controller.dart';
 import 'package:mobilekelomp/controllers/tap_bar_controller.dart';
+import 'package:mobilekelomp/screens/add_product_screen.dart';
+import 'package:mobilekelomp/screens/update_product_data.dart';
 import 'package:mobilekelomp/widgets/tap_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,7 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 20,
                       ),
                     ),
-                    Icon(CupertinoIcons.person),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() {
+                          return const AddProductScreen();
+                        });
+                      },
+                      child: Icon(CupertinoIcons.person),
+                    ),
                   ],
                 ),
               ),
@@ -118,56 +127,91 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               }),
-              Obx(() {
-                return Container(
-                  height: 420,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                            left: index == 0 ? 16 : 8,
-                            right: index == 5 - 1 ? 16 : 8,
-                          ),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
+              Container(
+                height: 420,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: homeScreenController.data.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                          left: index == 0 ? 16 : 8,
+                          right: index == 5 - 1 ? 16 : 8,
+                        ),
+                        child: Stack(
+                          children: [
+                            ClipRRect(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(96 + 48),
                                   topRight: Radius.circular(96 + 48),
                                 ),
-                                child: Image.network(""),
-                              ),
-                              Positioned(
-                                bottom: 48,
-                                left: 16,
+                                child: Image.network(
+                                    'https://cloud.appwrite.io/v1/storage/buckets/656b5731d791ab55764f/files/6572bd3a1a76fc57f676/view?project=6569c8adbd0edd5b30c1')),
+                            Positioned(
+                              bottom: 48,
+                              left: 16,
+                              child: Container(
+                                width: 200,
                                 child: Container(
-                                  width: 200,
-                                  child: Container(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'product1',
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Obx(
+                                        () => Text(
+                                          '${homeScreenController.data[index]['name']}',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        SizedBox(height: 8),
-                                        Text('12000'),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Obx(
+                                        () => Text(
+                                            '${homeScreenController.data[index]['price']}'),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      }),
-                );
-              }),
+                            ),
+                            Positioned(
+                              bottom: 48,
+                              right: 16,
+                              child: GestureDetector(
+                                onTap: () {
+                                  homeScreenController.deleteData(
+                                      homeScreenController.data[index]['\$id']);
+                                },
+                                child: Icon(
+                                  CupertinoIcons.delete,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 48,
+                              right: 48,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(() {
+                                    return UpdateProductScreen(
+                                      productId:
+                                          '${homeScreenController.data[index]['\$id']}',
+                                    );
+                                  });
+                                },
+                                child: Icon(
+                                  CupertinoIcons.pencil_circle,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
               Container(
                 margin: EdgeInsets.only(left: 16),
                 child: Text(
@@ -183,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.all(16),
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: homeScreenController.data.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -195,38 +239,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                 topRight: Radius.circular(32),
                               ),
                             ),
-                            child: Obx(() {
-                              return Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(32)),
-                                    child: Image.network(
-                                      "",
-                                      width: 100,
-                                    ),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(32)),
+                                  child: Image.network(
+                                    'https://cloud.appwrite.io/v1/storage/buckets/656b5731d791ab55764f/files/6572bd3a1a76fc57f676/view?project=6569c8adbd0edd5b30c1',
+                                    width: 100,
                                   ),
-                                  SizedBox(width: 16),
-                                  Container(
-                                    width: 200,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'product1',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                ),
+                                SizedBox(width: 16),
+                                Container(
+                                  width: 200,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${homeScreenController.data[index]['name']}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
                                         ),
-                                        Text('12000'),
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                          '${homeScreenController.data[index]['price']}'),
+                                    ],
                                   ),
-                                ],
-                              );
-                            }),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: 16),
                         ],
