@@ -10,7 +10,7 @@ class ClientController extends GetxController {
   void onInit() {
     client = Client()
         .setEndpoint("https://cloud.appwrite.io/v1")
-        .setProject("656bf185b41d2c6857ea")
+        .setProject("6572d3741d0a839beba8")
         .setSelfSigned(status: true);
     account = Account(client);
     databases = Databases(client);
