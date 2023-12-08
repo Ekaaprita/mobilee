@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "488371217702",
+    "project_id": "mobilekl-5fcee",
+    "storage_bucket": "mobilekl-5fcee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488371217702:android:7e330858e97353677ccde7",
+        "android_client_info": {
+          "package_name": "com.example.mobilekelomp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc2M6EJIcdvJHxJ2GQHbBLEpAzbKT1ynA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
